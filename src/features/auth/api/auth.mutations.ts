@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query'
 import type { SignInPayload, SignUpPayload } from '../types'
 import { signIn, signUp } from './auth.service'
 import type { AxiosError } from 'axios'
-import { useOnMutationAction } from '@/lib/utils'
+import { useOnMutationAction } from '@/features/utils'
 
 export function useSignInMutation() {
   const onMutationAction = useOnMutationAction()

@@ -21,3 +21,8 @@ export type RegisteredUserResponse = {
     active: boolean
     created_at: string
     }
+
+export const RoleMapper: Record<string, string> = {
+    tenantadmin: "Manager",
+    member: "Member"
+}

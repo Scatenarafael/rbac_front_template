@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Eye, EyeOff } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { cn } from "@/features/utils"
 
 
 type InputPasswordProps = Omit<React.ComponentProps<"input">, "type">

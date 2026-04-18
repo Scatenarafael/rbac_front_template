@@ -10,7 +10,7 @@ import { queryClient } from "./lib/query/query-client"
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
+      <RouterProvider router={router} />
     </QueryClientProvider>
   </StrictMode>
 )

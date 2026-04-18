@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button';
 
 
 const SignInSchema = zod.object({
-  email: zod.email(authValidationMessages.email.invalid).min(1, authValidationMessages.email.required),
+  email: zod.string().min(1, authValidationMessages.email.required).email(authValidationMessages.email.invalid),
   password: zod.string().min(1, authValidationMessages.password.required),
 });
 
@@ -49,7 +49,7 @@ export function SignInContentPage() {
     return (
         <div className="h-full flex-1 flex justify-center items-center bg-background">
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 border-2 shadow-lg p-10 rounded-lg">
+            <form noValidate onSubmit={handleSubmit(onSubmit)} className="space-y-8 border-2 shadow-lg p-10 rounded-lg">
                 <h1 className="text-2xl text-center italic font-bold">TEMPLATE</h1>
 
                 <div className="space-y-4 w-96">

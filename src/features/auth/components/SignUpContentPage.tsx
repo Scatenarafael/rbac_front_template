@@ -16,7 +16,7 @@ import { Button } from '@/components/ui/button';
 const SignUpSchema = zod.object({
     first_name: zod.string().min(1, authValidationMessages.first_name.required),
     last_name: zod.string().min(1, authValidationMessages.last_name.required),
-    email: zod.email(authValidationMessages.email.invalid).min(1, authValidationMessages.email.required),
+    email: zod.string().min(1, authValidationMessages.email.required).email(authValidationMessages.email.invalid),
     password: zod.string().min(1, authValidationMessages.password.required),
     re_password: zod.string().min(1, 'Confirme a senha.'),
     active: zod.boolean().default(true).optional()
@@ -25,7 +25,7 @@ const SignUpSchema = zod.object({
         ctx.addIssue({
             code: "custom",
             message: 'As senhas não coincidem.',
-            path: ["password"]
+            path: ["re_password"]
         });
     }
 });
@@ -47,6 +47,7 @@ export function SignUpContentPage() {
                 last_name: '',
                 email: '',
                 password: '',
+                re_password: '',
                 active: true,
             },
         });
@@ -64,7 +65,7 @@ export function SignUpContentPage() {
     
     return (
         <div className="h-full flex-1 flex justify-center items-center bg-background">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 border-2 shadow-lg p-10 rounded-lg">
+            <form noValidate onSubmit={handleSubmit(onSubmit)} className="space-y-8 border-2 shadow-lg p-10 rounded-lg">
                 <h1 className="text-2xl text-center italic font-bold">TEMPLATE</h1>
 
                 <div className="space-y-4 w-96">

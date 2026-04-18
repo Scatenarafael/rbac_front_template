@@ -9,7 +9,9 @@ export function RootComponent() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <TooltipProvider>
-        <Outlet />
+        <div className="h-screen min-h-0">
+          <Outlet />
+        </div>
         <Toaster />
         <TanStackRouterDevtools position="bottom-right" />
       </TooltipProvider>

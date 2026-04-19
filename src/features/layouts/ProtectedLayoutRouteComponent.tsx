@@ -1,18 +1,16 @@
-import { Outlet } from "@tanstack/react-router";
-import { NavMenu } from "./components/nav-menu";
-import { AuthProvider } from "../auth/contexts/auth-context";
-
+import { Outlet } from "@tanstack/react-router"
+import { NavMenu } from "./components/nav-menu"
+import { useAuthRefreshInterceptor } from "../auth/hooks/use-auth-refresh-interceptor"
 
 export function ProtectedLayoutRouteComponent() {
+  useAuthRefreshInterceptor()
 
-    return (
-        <AuthProvider>
-            <div className="flex h-full min-h-0">
-                <NavMenu />
-                <main className="flex flex-1 min-h-0">
-                    <Outlet />
-                </main>
-            </div>
-        </AuthProvider>
-    )
+  return (
+    <div className="flex h-full min-h-0">
+      <NavMenu />
+      <main className="flex min-h-0 flex-1">
+        <Outlet />
+      </main>
+    </div>
+  )
 }

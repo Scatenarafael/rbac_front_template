@@ -27,14 +27,14 @@ function InputPassword({ className, ...props }: InputPasswordProps) {
         className="text-muted-foreground absolute top-0 right-0 flex h-9 w-9 items-center justify-center rounded-r-md transition-colors hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] focus-visible:outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
         onMouseDown={(event) => event.preventDefault()}
         onClick={() => setIsVisible((currentValue) => !currentValue)}
-        aria-label={isVisible ? "Ocultar senha" : "Mostrar senha"}
+        aria-label={isVisible ? "Hide password" : "Show password"}
         aria-pressed={isVisible}
         disabled={props.disabled}
       >
         {isVisible ? (
-          <EyeOff className="size-4" aria-hidden="true" />
+          <EyeOff className="size-4 cursor-pointer" aria-hidden="true" />
         ) : (
-          <Eye className="size-4" aria-hidden="true" />
+          <Eye className="size-4 cursor-pointer" aria-hidden="true" />
         )}
       </button>
     </div>

@@ -8,7 +8,7 @@ export const api = axios.create({
 })
 
 // api.interceptors.request.use((config) => {
-//   // Exemplo: adicionar token
+//   // Example: add token
 //   // const token = localStorage.getItem('token')
 //   // if (token) config.headers.Authorization = `Bearer ${token}`
 //   return config
@@ -18,7 +18,7 @@ export const api = axios.create({
 //   (response) => response,
 //   (error) => {
 //     if (error.response?.status === 401) {
-//       // Exemplo: redirecionar para login, disparar refresh token, etc.
+//       // Example: redirect to sign-in, trigger token refresh, etc.
 //     }
 
 //     return Promise.reject(error)

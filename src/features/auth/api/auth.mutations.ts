@@ -1,70 +1,38 @@
-// src/features/users/api/users.mutations.ts
-import { useMutation } from '@tanstack/react-query'
-import type { SignInPayload, SignUpPayload } from '../types'
-import { signIn, signUp } from './auth.service'
-import type { AxiosError } from 'axios'
-import { useOnMutationAction } from '@/features/utils'
+import { signIn, signOut, signUp } from "./auth.service"
+import { useMutationCallback } from "@/features/utils"
 
 export function useSignInMutation() {
-  const onMutationAction = useOnMutationAction()
-
-  return useMutation({
-    mutationFn: async (payload: SignInPayload) => await signIn(payload),
-    onSuccess: async () => {
-      onMutationAction({
-        type: "success",
-        message: 'Login bem-sucedido',
-        redirectTo: '/',
-        refreshQueryKey: null
-      })
+  return useMutationCallback({
+    mutationFnCallback: signIn,
+    mutationActionProps: {
+      success: {
+        message: "Signed in successfully",
+        redirectTo: "/",
+      },
     },
-    onError: async (error: AxiosError) => {
-      const errors: string[] = []
-      
-      Object.values(error.response?.data || {}).forEach((value) => {
-        errors.push(value as string)
-      })
-
-      onMutationAction(
-        {
-          type: "error",
-          message: errors,
-          redirectTo: null,
-          refreshQueryKey: null
-        }
-      )
-    }
   })
 }
 
 export function useSignUpMutation() {
-  const onMutationAction = useOnMutationAction()
-
-  return useMutation({
-    mutationFn: async (payload: SignUpPayload) => await signUp(payload),
-    onSuccess: async () => {
-      onMutationAction({
-        type: "success",
-        message: 'Registro bem-sucedido',
-        redirectTo: '/sign-in',
-        refreshQueryKey: null
-      })
+  return useMutationCallback({
+    mutationFnCallback: signUp,
+    mutationActionProps: {
+      success: {
+        message: "Account created successfully",
+        redirectTo: "/sign-in",
+      },
     },
-    onError: async (error: AxiosError) => {
-      const errors: string[] = []
-      
-      Object.values(error.response?.data || {}).forEach((value) => {
-        errors.push(value as string)
-      })
+  })
+}
 
-      onMutationAction(
-        {
-          type: "error",
-          message: errors,
-          redirectTo: null,
-          refreshQueryKey: null
-        }
-      )
-    }
+export function useSignOutMutation() {
+  return useMutationCallback({
+    mutationFnCallback: signOut,
+    mutationActionProps: {
+      success: {
+        message: "Signed out successfully",
+        redirectTo: "/sign-in",
+      },
+    },
   })
 }

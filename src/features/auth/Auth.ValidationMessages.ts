@@ -3,16 +3,16 @@
 
 export const authValidationMessages = {
   email: {
-    required: 'Entre com e-mail.',
-    invalid: 'Endereço de e-mail inválido.',
+    required: 'Enter your email.',
+    invalid: 'Invalid email address.',
   },
   password: {
-    required: 'Digite a senha.',
+    required: 'Enter your password.',
   },
   first_name: {
-    required: 'Digite o nome.',
+    required: 'Enter your first name.',
   },
   last_name: {
-    required: 'Digite o sobrenome.',
+    required: 'Enter your last name.',
   }
 };

@@ -40,11 +40,9 @@ export function SignInContentPage() {
 
 
     function onSubmit(data: signInFormData) {
-        console.log(data);
         signInMutation.mutateAsync(data)
     }
 
-    console.log(errors)
     
     return (
         <div className="h-full flex-1 flex justify-center items-center bg-background">
@@ -53,24 +51,24 @@ export function SignInContentPage() {
                 <h1 className="text-2xl text-center italic font-bold">TEMPLATE</h1>
 
                 <div className="space-y-4 w-96">
-                    <Label htmlFor="email">E-mail</Label>
+                    <Label htmlFor="email">Email</Label>
                     <div className="space-y-1">
-                        <Input id="email" type="email" placeholder="Digite seu e-mail" {...register("email")} />
+                        <Input id="email" type="email" placeholder="Enter your email" {...register("email")} />
                         {errors.email && <FormErrorMessage error={errors.email} />}
                     </div>
                 </div>
                 
                 <div className="space-y-4 w-96">
-                    <Label htmlFor="password">Senha</Label>
+                    <Label htmlFor="password">Password</Label>
                     <div className="space-y-1">
-                        <InputPassword id="password" placeholder="Digite sua senha" {...register("password")} />
+                        <InputPassword id="password" placeholder="Enter your password" {...register("password")} />
                         {errors.password && <FormErrorMessage error={errors.password} />}
                     </div>
                 </div>
                 <div className="flex flex-col gap-4 justify-center items-center">
-                    <Button disabled={signInMutation.isPending} className="w-full">Entrar {signInMutation.isPending && <Loader2 className="animate-spin" />}</Button>
+                    <Button disabled={signInMutation.isPending} className="w-full">Sign in {signInMutation.isPending && <Loader2 className="animate-spin" />}</Button>
                     <Link to="/sign-up" className="text-sm text-primary underline">
-                        Não tem uma conta? Registre-se
+                        Don&apos;t have an account? Sign up
                     </Link>
                 </div>
             </form>

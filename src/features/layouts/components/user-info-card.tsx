@@ -1,13 +1,23 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { useSignOutMutation } from "@/features/auth/api/auth.mutations"
 import { AuthContext } from "@/features/auth/contexts/auth-context-types"
+import { useNavigate } from "@tanstack/react-router"
 import { useContext } from "react"
 
 
 export function UserInfoCard() {
+    const signOutMutation = useSignOutMutation()
+
+    const navigate = useNavigate()
 
     const {profile} = useContext(AuthContext)
+
+
+    function handleSignOut() {
+        signOutMutation.mutateAsync()
+    }
     
     return (
         <div className='w-50 p-0 rounded-md bg-card-foreground/20 flex gap-2 items-center justify-between'>
@@ -26,9 +36,9 @@ export function UserInfoCard() {
                         </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="bg-card max-w-8 flex flex-col *:justify-start *:w-full *:rounded-sm *:hover:bg-card-foreground/20 *:cursor-pointer *:p-2 *:text-sm" sideOffset={10} side="right">
-                    <Button type="button" variant="ghost">Profile</Button>
+                    <Button type="button" variant="ghost" onClick={() => navigate({to: "/profile"})}>Profile</Button>
                     <Button type="button" variant="ghost">Settings</Button>
-                    <Button type="button" variant="ghost">Logout</Button>
+                    <Button type="button" variant="ghost" onClick={handleSignOut}>Sign Out</Button>
                 </DropdownMenuContent>
             </DropdownMenu>
 

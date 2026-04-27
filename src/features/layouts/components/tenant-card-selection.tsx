@@ -12,7 +12,11 @@ export function TenantCardSelection() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="flex items-center justify-between gap-2 px-2 cursor-pointer">
+        <Button
+          type="button"
+          variant="ghost"
+          className="flex h-auto items-center justify-between gap-2 px-2 py-0"
+        >
           <div className="flex items-center gap-1 *:p-0 *:text-start">
             <p className="text-xs">{selectedUserTenantRole?.tenant.name || ""}</p>
             <span className="text-[10px]">-</span>
@@ -20,10 +24,8 @@ export function TenantCardSelection() {
               {RoleMapper[selectedUserTenantRole?.role.name || "member"]}
             </p>
           </div>
-          <Button variant="ghost" size="sm" className="p-0">
-            <ChevronDown />
-          </Button>
-        </div>
+          <ChevronDown />
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="scrollbar-hide p-0 flex max-h-32 flex-col overflow-y-auto">
         {profile?.user_tenant_roles?.map((tenantRoles) => {

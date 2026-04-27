@@ -158,7 +158,7 @@ export function useMutationCallback<
       onMutationAction({
         type: "success",
         message: successAction?.message ?? DEFAULT_SUCCESS_MESSAGE,
-        redirectTo: successAction?.redirectTo ?? "/sign-in",
+        redirectTo: successAction?.redirectTo ?? null,
         refreshQueryKey: successAction?.refreshQueryKey ?? null,
       })
     },

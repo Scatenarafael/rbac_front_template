@@ -1,17 +1,6 @@
-import { AuthProvider } from '@/features/auth/contexts/auth-context'
-import { ProtectedLayoutRouteComponent } from '@/features/layouts/ProtectedLayoutRouteComponent'
+import { ProtectedRouteComponent } from '@/features/layouts/ProtectedRouteComponent'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_protected')({
-  component: ProtectedRoute,
+  component: ProtectedRouteComponent,
 })
-
-
-
-export function ProtectedRoute() {
-  return (
-    <AuthProvider>
-      <ProtectedLayoutRouteComponent />
-    </AuthProvider>
-  )
-}

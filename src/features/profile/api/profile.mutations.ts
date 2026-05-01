@@ -1,5 +1,5 @@
 import { useMutationCallback } from "@/features/utils"
-import { changePassword } from "./auth.service"
+import { changePassword } from "./profile.service"
 
 export function useChangePasswordMutation() {
   return useMutationCallback({

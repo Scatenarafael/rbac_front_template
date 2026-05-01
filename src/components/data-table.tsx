@@ -29,7 +29,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination"
 import { cn } from "@/features/utils"
-import { DefaultPageSizeOptions } from "@/features/types"
+import { DefaultPageSizeOptions, type DefaultPageSizeOption } from "@/features/types"
 
 type DataTableProps<TData, TValue = unknown> = {
   columns: ColumnDef<TData, TValue>[]
@@ -40,6 +40,10 @@ type DataTableProps<TData, TValue = unknown> = {
   isLoading?: boolean
   pageSizeOptions?: readonly number[]
   paginate?: boolean
+  onPageChange?: (newPage: number) => void
+  onPerPageChange?: (newPerPage: DefaultPageSizeOption) => void
+  pageIndex?: number
+  pageSize?: number
 }
 
 
@@ -72,6 +76,10 @@ export function DataTable<TData, TValue = unknown>({
   isLoading = false,
   pageSizeOptions = DefaultPageSizeOptions,
   paginate = true,
+  onPageChange,
+  onPerPageChange,
+  pageIndex,
+  pageSize,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [globalFilter, setGlobalFilter] = React.useState("")
@@ -86,11 +94,24 @@ export function DataTable<TData, TValue = unknown>({
     data,
     state: {
       globalFilter,
-      pagination,
+      pagination: {
+        pageIndex: pageIndex ?? pagination.pageIndex,
+        pageSize: pageSize ?? pagination.pageSize,
+      },
       sorting,
     },
     onGlobalFilterChange: setGlobalFilter,
-    onPaginationChange: setPagination,
+    onPaginationChange: (updater) => {
+      setPagination(updater)
+      if (onPageChange) {
+        const newPage = typeof updater === "function" ? updater(pagination).pageIndex : updater.pageIndex
+        onPageChange(newPage + 1)
+      }
+      if (onPerPageChange) {
+        const newPerPage = typeof updater === "function" ? updater(pagination).pageSize : updater.pageSize
+        onPerPageChange(newPerPage as DefaultPageSizeOption)
+      }
+    },
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),

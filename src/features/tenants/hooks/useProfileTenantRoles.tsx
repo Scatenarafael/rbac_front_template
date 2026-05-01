@@ -30,6 +30,8 @@ interface UseProfileTenantRolesResult {
     refetchInvites: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<Paginated<InvitesResponse>, Error>>
     inviteColumns: ColumnDef<InvitesResponse>[]
     invitesFrom: string | null
+    pageIndex?: number
+    pageSize?: number
 }
 
 
@@ -211,6 +213,8 @@ export function useProfileTenantRoles(): UseProfileTenantRolesResult {
         isInvitesFetching,
         refetchInvites,
         inviteColumns,
-        invitesFrom
+        invitesFrom,
+        pageIndex: page - 1,
+        pageSize: perPage,
     }
 }

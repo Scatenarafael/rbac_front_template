@@ -16,6 +16,16 @@ export type InvitesResponse = {
     updated_at: string
 }
 
+export type UserInvitesResponse = {
+    id: string,
+    tenant: {
+        id: string,
+        name: string
+    },
+    status: InviteStatus,
+    updated_at: string
+}
+
 
 export const ROLE: Record<string, string> = {
     tenantadmin: "Admin",

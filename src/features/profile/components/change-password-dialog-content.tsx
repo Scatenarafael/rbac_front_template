@@ -6,7 +6,7 @@ import { DialogContent } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { authValidationMessages } from '@/features/auth/Auth.ValidationMessages';
 import { useForm } from 'react-hook-form';
-import { useChangePasswordMutation } from '../api/auth.mutations';
+import { useChangePasswordMutation } from '../api/profile.mutations';
 import { Loader2 } from 'lucide-react';
 
 

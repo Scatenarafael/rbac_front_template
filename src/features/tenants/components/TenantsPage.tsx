@@ -9,7 +9,7 @@ import { AuthContext } from "@/features/auth/contexts/auth-context-types"
 
 export function TenantsPage() {
     const {profile, profileRefetch} = useContext( AuthContext )
-    const { columns, data, inviteColumns, invites, invitesFrom } = useProfileTenantRoles()
+    const { columns, data } = useProfileTenantRoles()
 
     if (!profile) {
         profileRefetch()
@@ -25,19 +25,6 @@ export function TenantsPage() {
                 filterPlaceholder="Buscar tenants..."
                 paginate={false}
             />
-            {
-                invites && invites.results.length > 0 && (
-                    <>
-                        <h2 className="text-xl font-semibold">Invites from {profile?.user_tenant_roles.filter((utr) => utr.tenant.id === invitesFrom)[0]?.tenant.name}</h2>
-                        <DataTable
-                            columns={inviteColumns}
-                            data={invites.results}
-                            emptyMessage="Nenhum convite encontrado."
-                            filterPlaceholder="Buscar convites..."
-                        />
-                    </>
-                )
-            }
         </div>
     )
 }

@@ -3,22 +3,26 @@ import { Button } from "@/components/ui/button"
 import { Dialog, DialogTrigger } from "@/components/ui/dialog"
 import type { IProfileProps } from "@/features/auth/types/auth-types"
 import { ChangePasswordDialogContent } from "./change-password-dialog-content"
+import avatarImag from "@/assets/avatar.jpg"
+import { UserInvitesDialogContent } from "./user-invites-dialog-content"
+import { useState } from "react"
 
 interface IProfilePage {
   profile: IProfileProps
 }
 
 export function ProfilePage({ profile }: IProfilePage) {
+    const [isUserInvitesOpen, setIsUserInvitesOpen] = useState(false)
 
     return (
         <div className="flex flex-1 flex-col gap-4 p-4">
             <h1 className="text-2xl font-bold">Profile Page</h1>
-            <div className="flex flex-col justify-center items-center gap-16 p-4 bg-card rounded-md h-full">
+            <div className="flex flex-col justify-center items-center gap-6 p-4 bg-card rounded-md h-full">
                 <div className="">
                     <Avatar className="w-32 h-32">
                         <AvatarImage
-                            src="https://github.com/Scatenarafael.png"
-                            alt="@Scatenarafael"
+                            src={avatarImag}
+                            alt="avatar"
                         />
                         <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
@@ -52,6 +56,13 @@ export function ProfilePage({ profile }: IProfilePage) {
                             <Button className="w-full">Edit Password</Button>
                         </DialogTrigger>
                         <ChangePasswordDialogContent user_id={profile.id} />
+                    </Dialog>
+
+                    <Dialog open={isUserInvitesOpen} onOpenChange={setIsUserInvitesOpen}>
+                        <DialogTrigger asChild>
+                            <Button className="w-full">User Invites</Button>
+                        </DialogTrigger>
+                        <UserInvitesDialogContent open={isUserInvitesOpen} />
                     </Dialog>
                 </div>
             </div>

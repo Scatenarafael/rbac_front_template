@@ -47,7 +47,7 @@ export type UseMutationCallbackProps<
 
 const DEFAULT_SUCCESS_MESSAGE = "Action completed successfully"
 const DEFAULT_ERROR_MESSAGE = "Could not complete the operation"
-
+const ERROR_MESSAGE_KEYS = ["message", "detail", "error", "msg"] as const
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -88,9 +88,6 @@ export function useOnMutationAction() {
   }
 }
 
-
-
-
 // Converts any API error value into a list of messages that can be rendered as toasts.
 function normalizeErrorMessages(value: unknown): string[] {
   if (Array.isArray(value)) {
@@ -98,14 +95,35 @@ function normalizeErrorMessages(value: unknown): string[] {
   }
 
   if (typeof value === "string") {
-    return [value]
+    return value.trim() ? [value] : []
+  }
+
+  if (typeof value === "number" || typeof value === "boolean") {
+    return [String(value)]
   }
 
   if (value == null) {
     return []
   }
 
-  return [String(value)]
+  if (value instanceof Error) {
+    return value.message ? [value.message] : []
+  }
+
+  if (typeof value === "object") {
+    const objectValue = value as Record<string, unknown>
+    const directMessages = ERROR_MESSAGE_KEYS.flatMap((key) =>
+      normalizeErrorMessages(objectValue[key]),
+    )
+
+    if (directMessages.length > 0) {
+      return directMessages
+    }
+
+    return Object.values(objectValue).flatMap(normalizeErrorMessages)
+  }
+
+  return []
 }
 
 // Extracts server-side validation messages from Axios errors when they are available.
@@ -115,16 +133,13 @@ function getMutationErrorMessages(error: unknown): string[] {
   }
 
   const responseData = error.response?.data
+  const messages = normalizeErrorMessages(responseData)
 
-  if (
-    responseData &&
-    typeof responseData === "object" &&
-    !Array.isArray(responseData)
-  ) {
-    return Object.values(responseData).flatMap(normalizeErrorMessages)
+  if (messages.length > 0) {
+    return [...new Set(messages)]
   }
 
-  return normalizeErrorMessages(responseData)
+  return error.message ? [error.message] : []
 }
 
 // Wraps useMutation with shared toast, redirect, and query refresh behavior.

@@ -1,12 +1,47 @@
-import type { InviteStatus } from "@/features/tenants/types";
-import { Check, CircleX, ClockFading } from "lucide-react";
-import type { ReactNode } from "react";
+import type { InviteStatus } from "@/features/tenants/types"
+import { Check, CircleX, ClockFading } from "lucide-react"
+import type { ReactNode } from "react"
 
-
-
-
-export const StatusBadge: Record<InviteStatus, ReactNode> = {
-    approved: <div className="bg-background *:text-xs px-2 py-1 flex gap-2 items-center rounded-full text-green-500"><span>Approved</span> <Check /></div>,
-    pending: <div className="bg-background *:text-xs px-2 py-1 flex gap-2 items-center rounded-full text-yellow-500"><span>Pending</span> <ClockFading /></div>,
-    rejected: <div className="bg-background *:text-xs px-2 py-1 flex gap-2 items-center rounded-full text-red-500"><span>Rejected</span> <CircleX /></div>
+type StatusBadgeProps = {
+  status: InviteStatus
 }
+
+const statusBadgeContent: Record<
+  InviteStatus,
+  {
+    label: string
+    icon: ReactNode
+    className: string
+  }
+> = {
+  approved: {
+    label: "Approved",
+    icon: <Check />,
+    className: "text-green-500",
+  },
+  pending: {
+    label: "Pending",
+    icon: <ClockFading />,
+    className: "text-yellow-500",
+  },
+  rejected: {
+    label: "Rejected",
+    icon: <CircleX />,
+    className: "text-red-500",
+  },
+}
+
+function StatusBadge({ status }: StatusBadgeProps) {
+  const content = statusBadgeContent[status]
+
+  return (
+    <div
+      className={`flex items-center gap-2 rounded-full bg-background px-2 py-1 *:text-xs ${content.className}`}
+    >
+      <span>{content.label}</span>
+      {content.icon}
+    </div>
+  )
+}
+
+export { StatusBadge }

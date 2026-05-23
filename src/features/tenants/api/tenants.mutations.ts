@@ -1,5 +1,5 @@
 import { useMutationCallback } from "@/features/utils";
-import { approveInvite, rejectInvite } from "./tenants.service";
+import { approveInvite, createTenant, deleteTenant, rejectInvite } from "./tenants.service";
 
 
 
@@ -24,6 +24,48 @@ export function useRejectInviteMutation(tenantId: string, page: number, perPage:
                 message: "Invite rejected successfully",
                 refreshQueryKey: ["invites-by-tenant-query", tenantId, page, perPage],
                 redirectTo: null       
+            },
+        },
+    })
+}
+
+interface UseCreateTenantMutationProps {
+    onSuccessCallback?: () => void;
+}
+
+export function useCreateTenantMutation({ onSuccessCallback }: UseCreateTenantMutationProps) {
+    return useMutationCallback({
+        mutationFnCallback: createTenant,
+        onSuccess: () => {
+            console.log("Tenant created successfully")
+            if (onSuccessCallback) {
+                onSuccessCallback();
+            }
+        },
+        mutationActionProps: {
+            success: {
+                message: "Tenant created successfully",
+                refreshQueryKey: ["me-query"],
+                redirectTo: null
+            },
+        },
+    })
+}
+
+export function useDeleteTenantMutation({ onSuccessCallback }: UseCreateTenantMutationProps) {
+    return useMutationCallback({
+        mutationFnCallback: deleteTenant,
+        onSuccess: () => {
+            console.log("Tenant deleted successfully")
+            if (onSuccessCallback) {
+                onSuccessCallback();
+            }
+        },
+        mutationActionProps: {
+            success: {
+                message: "Tenant deleted successfully",
+                refreshQueryKey: ["me-query"],
+                redirectTo: null
             },
         },
     })

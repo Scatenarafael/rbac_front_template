@@ -19,3 +19,13 @@ export async function approveInvite(inviteId: string) {
 export async function rejectInvite(inviteId: string) {
     await api.post(routes.rejectInvite(inviteId));
 }
+
+export async function createTenant(name: string) {
+    const response = await api.post(routes.createTenant(), { name });
+    return response.data;
+}
+
+export async function deleteTenant(tenantId: string) {
+    const response = await api.delete(routes.deleteTenant(tenantId));
+    return response.data;
+}
